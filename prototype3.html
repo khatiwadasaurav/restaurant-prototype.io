@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low-Fidelity Prototype 3: Smart Customization Templates</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #e0e0e0;
+            padding: 20px;
+        }
+
+        .wireframe-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            padding: 20px;
+            min-height: 600px;
+            background: white;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            background: #ccc;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .wireframe-box {
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .template-button {
+            border: 2px solid #333;
+            padding: 15px 10px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #f0f0f0;
+        }
+
+        .template-button.selected {
+            background: #333;
+            color: white;
+        }
+
+        .item-box {
+            display: flex;
+            gap: 15px;
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            background: #f0f0f0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            font-weight: bold;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #333;
+            background: #ddd;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .button-primary {
+            background: #333;
+            color: white;
+        }
+
+        .label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            margin-top: 15px;
+        }
+
+        .expand-button {
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed #666;
+            background: white;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: center;
+            color: #666;
+        }
+
+        .hidden-options {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .hidden-options.visible {
+            display: block;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #333;
+            background: #f0f0f0;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .prototype-label {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .modification-list {
+            background: #fff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe-container">
+        <div class="prototype-label">
+            LOW-FIDELITY PROTOTYPE 3: SMART CUSTOMIZATION TEMPLATES
+        </div>
+
+        <!-- Screen 1: Templates -->
+        <div id="screen1" class="screen active">
+            <div class="header">
+                <h1>Customize Order</h1>
+                <p>Restaurant Name</p>
+            </div>
+
+            <div class="item-box">
+                <div class="item-image">[IMAGE]</div>
+                <div>
+                    <strong>Buddha Bowl</strong>
+                    <p style="font-size: 11px; color: #666;">Rice, veggies, protein, sauce</p>
+                    <p style="font-size: 14px; font-weight: bold; margin-top: 5px;">$14.95</p>
+                </div>
+            </div>
+
+            <!-- QUICK TEMPLATES - KEY FEATURE -->
+            <div class="label">⚡ QUICK TEMPLATES (1-Click)</div>
+            <div class="template-grid">
+                <div class="template-button selected" onclick="showScreen(2)">
+                    [🌱]<br>MAKE IT<br>VEGAN
+                </div>
+                <div class="template-button">
+                    [🌶️]<br>EXTRA<br>SPICY
+                </div>
+                <div class="template-button">
+                    [🚫🌾]<br>GLUTEN<br>FREE
+                </div>
+                <div class="template-button">
+                    [⚖️]<br>LOW<br>CARB
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 15px 0; font-size: 12px; color: #666;">
+                — OR —
+            </div>
+
+            <button class="button" onclick="showScreen(3)">
+                CUSTOMIZE YOURSELF ↓
+            </button>
+
+            <p style="font-size: 11px; color: #666; font-style: italic; margin-top: 10px; text-align: center;">
+                Templates automatically set common modifications
+            </p>
+        </div>
+
+        <!-- Screen 2: Template Selected -->
+        <div id="screen2" class="screen">
+            <div class="header">
+                <h1>Template: Make It Vegan</h1>
+                <p>Preview Changes</p>
+            </div>
+
+            <div class="wireframe-box" style="border: 3px solid #333; background: #e8e8e8;">
+                <h3 style="font-size: 14px; margin-bottom: 10px;">
+                    🌱 "Make It Vegan" will change:
+                </h3>
+                
+                <div class="modification-list">
+                    <strong>REMOVE:</strong><br>
+                    • Chicken (−$0.00)<br>
+                    • Cheese (−$0.00)<br>
+                    • Egg (−$0.00)
+                </div>
+
+                <div class="modification-list">
+                    <strong>ADD:</strong><br>
+                    • Tofu (+$2.00)<br>
+                    • Extra vegetables (+$1.00)
+                </div>
+
+                <div class="modification-list">
+                    <strong>SUBSTITUTIONS:</strong><br>
+                    • Vegan sauce instead of regular
+                </div>
+
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #333; font-weight: bold; font-size: 14px;">
+                    New Price: $17.95 (was $14.95)
+                </div>
+            </div>
+
+            <p style="font-size: 11px; color: #666; margin: 15px 0;">
+                You can still adjust individual items after confirming template
+            </p>
+
+            <button class="button button-primary" onclick="showScreen(1)">
+                ✓ CONFIRM TEMPLATE
+            </button>
+
+            <button class="button" onclick="showScreen(4)">
+                MODIFY TEMPLATE →
+            </button>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(1)">← Choose Different Template</div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Progressive Disclosure -->
+        <div id="screen3" class="screen">
+            <div class="header">
+                <h1>Custom Modifications</h1>
+                <p>Buddha Bowl</p>
+            </div>
+
+            <div class="label">BASIC OPTIONS (Most Common)</div>
+            <div class="wireframe-box">
+                <div class="checkbox-item">
+                    <span>□ No chicken</span>
+                    <span class="checkbox"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Extra vegetables</span>
+                    <span class="checkbox"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Spicy (+$0.50)</span>
+                    <span class="checkbox"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Extra sauce (+$1.00)</span>
+                    <span class="checkbox"></span>
+                </div>
+            </div>
+
+            <!-- PROGRESSIVE DISCLOSURE - KEY FEATURE -->
+            <button class="expand-button" onclick="toggleExpanded()">
+                ▼ NEED MORE OPTIONS? Click to expand full ingredient list
+            </button>
+
+            <div id="expandedOptions" class="hidden-options">
+                <div class="label" style="margin-top: 20px;">ALL INGREDIENTS (Complete List)</div>
+                <div class="wireframe-box">
+                    <p style="font-size: 11px; color: #666; margin-bottom: 10px;">
+                        Toggle any ingredient on/off:
+                    </p>
+                    <div class="checkbox-item">
+                        <span>□ Rice</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Quinoa</span>
+                        <span class="checkbox"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Kale</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Carrots</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Broccoli</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Chicken</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Tofu</span>
+                        <span class="checkbox"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Avocado (+$2)</span>
+                        <span class="checkbox"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Sesame dressing</span>
+                        <span class="checkbox checked"></span>
+                    </div>
+                    <div class="checkbox-item">
+                        <span>□ Peanut sauce</span>
+                        <span class="checkbox"></span>
+                    </div>
+                </div>
+
+                <p style="font-size: 11px; color: #666; font-style: italic; margin-top: 10px;">
+                    Full control when you need it
+                </p>
+            </div>
+
+            <button class="button button-primary">
+                ADD TO CART
+            </button>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(1)">← Back to Templates</div>
+            </div>
+        </div>
+
+        <!-- Screen 4: Full Ingredient Checklist -->
+        <div id="screen4" class="screen">
+            <div class="header">
+                <h1>Detailed Customization</h1>
+                <p>Modify Template</p>
+            </div>
+
+            <div class="wireframe-box" style="background: #e8e8e8;">
+                <p style="font-size: 11px; margin-bottom: 10px;">
+                    <strong>Starting from:</strong> Make It Vegan template<br>
+                    You can adjust any ingredient below
+                </p>
+            </div>
+
+            <div class="label">FULL INGREDIENT LIST</div>
+            <div class="wireframe-box">
+                <p style="font-size: 11px; color: #666; margin-bottom: 10px;">
+                    ✓ = Include | ✗ = Remove | + = Add
+                </p>
+                
+                <div class="checkbox-item">
+                    <span>Rice</span>
+                    <div style="display: flex; gap: 5px;">
+                        <div class="checkbox checked" style="width: 15px; height: 15px;"></div>
+                        <span style="font-size: 10px;">✓ Include</span>
+                    </div>
+                </div>
+                
+                <div class="checkbox-item">
+                    <span>Chicken</span>
+                    <div style="display: flex; gap: 5px;">
+                        <div class="checkbox" style="width: 15px; height: 15px;"></div>
+                        <span style="font-size: 10px;">✗ Removed (template)</span>
+                    </div>
+                </div>
+
+                <div class="checkbox-item">
+                    <span>Tofu (+$2.00)</span>
+                    <div style="display: flex; gap: 5px;">
+                        <div class="checkbox checked" style="width: 15px; height: 15px;"></div>
+                        <span style="font-size: 10px;">+ Added (template)</span>
+                    </div>
+                </div>
+
+                <div class="checkbox-item">
+                    <span>Extra veggies (+$1.00)</span>
+                    <div style="display: flex; gap: 5px;">
+                        <div class="checkbox checked" style="width: 15px; height: 15px;"></div>
+                        <span style="font-size: 10px;">+ Added (template)</span>
+                    </div>
+                </div>
+
+                <p style="font-size: 11px; color: #666; margin-top: 10px; font-style: italic;">
+                    [... Full list of all 15-20 ingredients ...]
+                </p>
+            </div>
+
+            <div class="label">SAVE AS PERSONAL TEMPLATE (OPTIONAL)</div>
+            <div class="wireframe-box">
+                <input type="text" placeholder="Template name (e.g., 'My Usual Bowl')" 
+                    style="width: 100%; padding: 8px; border: 2px solid #333; font-size: 12px;">
+                <p style="font-size: 11px; color: #666; margin-top: 8px;">
+                    Save this configuration for faster ordering next time
+                </p>
+            </div>
+
+            <button class="button button-primary">
+                CONFIRM & ADD TO CART
+            </button>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(2)">← Back</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function toggleExpanded() {
+            const expanded = document.getElementById('expandedOptions');
+            expanded.classList.toggle('visible');
+            event.target.textContent = expanded.classList.contains('visible') 
+                ? '▲ HIDE FULL LIST' 
+                : '▼ NEED MORE OPTIONS? Click to expand full ingredient list';
+        }
+    </script>
+</body>
+</html>

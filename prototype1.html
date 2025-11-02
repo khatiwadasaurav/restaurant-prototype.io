@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low-Fidelity Prototype 1: Restaurant Acknowledgment System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #e0e0e0;
+            padding: 20px;
+        }
+
+        .wireframe-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            padding: 20px;
+            min-height: 600px;
+            background: white;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            background: #ccc;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .wireframe-box {
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+
+        .wireframe-box h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .wireframe-box p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .item-box {
+            display: flex;
+            gap: 15px;
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            background: #f0f0f0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkbox-item:last-child {
+            border-bottom: none;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            font-weight: bold;
+        }
+
+        .textarea-box {
+            width: 100%;
+            height: 60px;
+            border: 2px solid #333;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #333;
+            background: #ddd;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .button-primary {
+            background: #333;
+            color: white;
+        }
+
+        .label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .status-indicator {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .spinner-placeholder {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #ccc;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            border: 4px solid #333;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .info-text {
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #333;
+            background: #f0f0f0;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .prototype-label {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe-container">
+        <div class="prototype-label">
+            LOW-FIDELITY PROTOTYPE 1: RESTAURANT ACKNOWLEDGMENT
+        </div>
+
+        <!-- Screen 1 -->
+        <div id="screen1" class="screen active">
+            <div class="header">
+                <h1>Customize Order</h1>
+                <p>Restaurant Name</p>
+            </div>
+
+            <div class="item-box">
+                <div class="item-image">[IMAGE]</div>
+                <div>
+                    <strong>Menu Item Name</strong>
+                    <p style="font-size: 11px; color: #666;">Description of item</p>
+                    <p style="font-size: 14px; font-weight: bold; margin-top: 5px;">$XX.XX</p>
+                </div>
+            </div>
+
+            <div class="label">MODIFICATIONS</div>
+            <div class="wireframe-box">
+                <div class="checkbox-item">
+                    <span>□ Remove ingredient</span>
+                    <span class="checkbox checked"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Add extra (+ $X.XX)</span>
+                    <span class="checkbox checked"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Substitute item</span>
+                    <span class="checkbox"></span>
+                </div>
+            </div>
+
+            <div class="label">SPECIAL INSTRUCTIONS</div>
+            <textarea class="textarea-box" placeholder="Enter special instructions...">No cross-contamination please</textarea>
+
+            <p class="info-text">* Your request will be sent to restaurant for acknowledgment</p>
+
+            <button class="button button-primary" onclick="showScreen(2)">
+                SEND FOR ACKNOWLEDGMENT →
+            </button>
+        </div>
+
+        <!-- Screen 2 -->
+        <div id="screen2" class="screen">
+            <div class="header">
+                <h1>Waiting for Restaurant</h1>
+                <p>Acknowledgment Pending</p>
+            </div>
+
+            <div class="status-indicator">
+                <div class="spinner-placeholder">[SPINNER]</div>
+                
+                <h3 style="margin-bottom: 10px;">Requesting Acknowledgment...</h3>
+                <p class="info-text">Your customization has been sent to the restaurant</p>
+
+                <div class="wireframe-box" style="margin-top: 30px; text-align: left;">
+                    <h3>Status:</h3>
+                    <p>□ Order received<br>
+                    □ Restaurant reviewing<br>
+                    □ Waiting for confirmation</p>
+                </div>
+
+                <div class="wireframe-box" style="text-align: left;">
+                    <h3>Your Request:</h3>
+                    <p>• Remove ingredient<br>
+                    • Add extra (+$X.XX)<br>
+                    • Special: No cross-contamination</p>
+                </div>
+
+                <p class="info-text" style="margin-top: 20px;">You'll be notified when restaurant responds</p>
+            </div>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(1)">← Back</div>
+                <div class="nav-button" onclick="showScreen(3)">Demo: Confirmed →</div>
+            </div>
+        </div>
+
+        <!-- Screen 3 -->
+        <div id="screen3" class="screen">
+            <div class="header">
+                <h1>Order Confirmed</h1>
+                <p>Restaurant Acknowledged</p>
+            </div>
+
+            <div class="status-indicator">
+                <div class="checkmark">✓</div>
+                
+                <h3 style="margin-bottom: 15px;">Restaurant Confirmed Your Request</h3>
+            </div>
+
+            <div class="wireframe-box">
+                <h3>Acknowledged By:</h3>
+                <p style="margin-top: 10px;">
+                    <strong>[Staff Name] - [Role]</strong><br>
+                    <span style="font-size: 11px;">Confirmed [X] minutes ago</span>
+                </p>
+            </div>
+
+            <div class="wireframe-box">
+                <h3>Order Details:</h3>
+                <p style="margin-top: 10px;">
+                    <strong>Menu Item Name</strong> - $XX.XX<br>
+                    ✓ Remove ingredient<br>
+                    ✓ Add extra (+$X.XX)<br>
+                    ✓ No cross-contamination<br>
+                    <br>
+                    <strong>Total: $XX.XX</strong><br>
+                    Est. prep time: 20-25 min
+                </p>
+            </div>
+
+            <button class="button button-primary" onclick="showScreen(1)">
+                ADD TO CART
+            </button>
+
+            <button class="button" onclick="showScreen(4)">
+                See Alternative: Can't Fulfill →
+            </button>
+        </div>
+
+        <!-- Screen 4 -->
+        <div id="screen4" class="screen">
+            <div class="header">
+                <h1>Restaurant Message</h1>
+                <p>Issue with Request</p>
+            </div>
+
+            <div class="wireframe-box" style="border-left: 4px solid #333;">
+                <h3>From: [Staff Name]</h3>
+                <p style="margin-top: 10px;">
+                    "We're currently out of [ingredient]. Would you like to choose an alternative?"
+                </p>
+            </div>
+
+            <div class="label">SELECT ALTERNATIVE:</div>
+
+            <div class="wireframe-box" style="border: 3px solid #333;">
+                <h3>■ Option 1 (Selected)</h3>
+                <p>Proceed without this ingredient</p>
+            </div>
+
+            <div class="wireframe-box">
+                <h3>□ Option 2</h3>
+                <p>Substitute with [alternative]</p>
+            </div>
+
+            <div class="wireframe-box">
+                <h3>□ Option 3</h3>
+                <p>Cancel this customization</p>
+            </div>
+
+            <div class="label">MESSAGE TO RESTAURANT (OPTIONAL)</div>
+            <textarea class="textarea-box" placeholder="Reply to restaurant..."></textarea>
+
+            <button class="button button-primary" onclick="showScreen(3)">
+                CONFIRM SELECTION
+            </button>
+
+            <button class="button" onclick="showScreen(1)">
+                ← BACK TO EDIT
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

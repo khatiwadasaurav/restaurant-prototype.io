@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Low-Fidelity Prototype 2: Real-Time Visual Feedback</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #e0e0e0;
+            padding: 20px;
+        }
+
+        .wireframe-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            border: 3px solid #333;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            padding: 20px;
+            min-height: 600px;
+            background: white;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .header {
+            background: #ccc;
+            padding: 15px;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 2px solid #333;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .wireframe-box {
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #f9f9f9;
+        }
+
+        .summary-panel {
+            border: 3px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: #e8e8e8;
+        }
+
+        .summary-panel h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 5px 0;
+            border-bottom: 1px dotted #999;
+        }
+
+        .item-box {
+            display: flex;
+            gap: 15px;
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            background: #f0f0f0;
+        }
+
+        .checkbox-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #333;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            font-weight: bold;
+        }
+
+        .button {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #333;
+            background: #ddd;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .button-primary {
+            background: #333;
+            color: white;
+        }
+
+        .label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #ccc;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #333;
+            background: #f0f0f0;
+            font-size: 12px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .prototype-label {
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .cart-detail {
+            border: 2px solid #333;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f9f9f9;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wireframe-container">
+        <div class="prototype-label">
+            LOW-FIDELITY PROTOTYPE 2: REAL-TIME VISUAL FEEDBACK
+        </div>
+
+        <!-- Screen 1 -->
+        <div id="screen1" class="screen active">
+            <div class="header">
+                <h1>Customize Order</h1>
+                <p>Restaurant Name</p>
+            </div>
+
+            <!-- LIVE SUMMARY PANEL - KEY FEATURE -->
+            <div class="summary-panel">
+                <h3>📋 LIVE SUMMARY</h3>
+                <div class="summary-item">
+                    <span>Remove ingredient</span>
+                    <span><strong>−$0.00</strong></span>
+                </div>
+                <div class="summary-item">
+                    <span>Add extra</span>
+                    <span><strong>+$1.50</strong></span>
+                </div>
+                <div class="summary-item">
+                    <span>Special instructions</span>
+                    <span>Added</span>
+                </div>
+                <div class="summary-item" style="border-top: 2px solid #333; margin-top: 10px; padding-top: 10px; font-weight: bold;">
+                    <span>NEW TOTAL:</span>
+                    <span>$18.45</span>
+                </div>
+            </div>
+
+            <div class="item-box">
+                <div class="item-image">[IMAGE]</div>
+                <div>
+                    <strong>Menu Item Name</strong>
+                    <p style="font-size: 11px; color: #666;">Description</p>
+                    <p style="font-size: 14px; font-weight: bold; margin-top: 5px;">
+                        <strike>$16.95</strike> → $18.45
+                    </p>
+                </div>
+            </div>
+
+            <div class="label">MODIFICATIONS</div>
+            <div class="wireframe-box">
+                <div class="checkbox-item">
+                    <span>□ Remove ingredient</span>
+                    <span class="checkbox checked"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Add extra (+ $1.50) ← Updates live</span>
+                    <span class="checkbox checked"></span>
+                </div>
+                <div class="checkbox-item">
+                    <span>□ Substitute item</span>
+                    <span class="checkbox"></span>
+                </div>
+            </div>
+
+            <p style="font-size: 11px; color: #666; font-style: italic; margin: 10px 0;">
+                * Changes appear immediately in summary above
+            </p>
+
+            <button class="button button-primary" onclick="showScreen(2)">
+                ADD TO CART →
+            </button>
+        </div>
+
+        <!-- Screen 2: Interaction State -->
+        <div id="screen2" class="screen">
+            <div class="header">
+                <h1>Customize Order</h1>
+                <p>Restaurant Name</p>
+            </div>
+
+            <!-- UPDATED SUMMARY showing new change -->
+            <div class="summary-panel" style="border-color: #333; background: #ddd;">
+                <h3>📋 LIVE SUMMARY (UPDATED!)</h3>
+                <div class="summary-item">
+                    <span>Remove ingredient</span>
+                    <span><strong>−$0.00</strong></span>
+                </div>
+                <div class="summary-item">
+                    <span>Add extra</span>
+                    <span><strong>+$1.50</strong></span>
+                </div>
+                <div class="summary-item" style="background: #fff; border: 2px dashed #333; padding: 5px;">
+                    <span>⚡ JUST ADDED: Extra sauce</span>
+                    <span><strong>+$1.00</strong></span>
+                </div>
+                <div class="summary-item" style="border-top: 2px solid #333; margin-top: 10px; padding-top: 10px; font-weight: bold;">
+                    <span>NEW TOTAL:</span>
+                    <span>$19.45 (was $18.45)</span>
+                </div>
+            </div>
+
+            <p style="font-size: 12px; text-align: center; font-weight: bold; margin-bottom: 20px;">
+                ↑ SUMMARY UPDATES IN REAL-TIME AS YOU CLICK ↑
+            </p>
+
+            <div class="wireframe-box">
+                <h3 style="font-size: 14px; margin-bottom: 10px;">Demonstration:</h3>
+                <p style="font-size: 12px;">
+                    When user clicks "Extra sauce" checkbox, the summary panel immediately shows:
+                    <br><br>
+                    • New item added to list<br>
+                    • Price updates (+$1.00)<br>
+                    • Total recalculated<br>
+                    • Visual highlight (flash/animation)
+                </p>
+            </div>
+
+            <button class="button button-primary" onclick="showScreen(3)">
+                PREVIEW CART →
+            </button>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(1)">← Back</div>
+            </div>
+        </div>
+
+        <!-- Screen 3: Cart Preview -->
+        <div id="screen3" class="screen">
+            <div class="header">
+                <h1>Cart Preview</h1>
+                <p>Review Your Order</p>
+            </div>
+
+            <div class="wireframe-box">
+                <h3 style="font-size: 14px; margin-bottom: 10px;">Your Cart:</h3>
+                
+                <div class="cart-detail">
+                    <strong>Menu Item Name</strong><br>
+                    <span style="font-size: 11px; color: #666;">Base price: $16.95</span>
+                </div>
+
+                <div class="cart-detail" style="border-left: 4px solid #333; background: #f0f0f0;">
+                    <strong>Customizations:</strong><br>
+                    <div style="margin-top: 8px; font-size: 11px;">
+                        ✓ Remove ingredient (−$0.00)<br>
+                        ✓ Add extra (+$1.50)<br>
+                        ✓ Extra sauce (+$1.00)<br>
+                        ✓ Special instructions: [text]
+                    </div>
+                </div>
+
+                <div class="cart-detail" style="border: 3px solid #333; font-weight: bold;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>TOTAL:</span>
+                        <span>$19.45</span>
+                    </div>
+                </div>
+            </div>
+
+            <p style="font-size: 11px; color: #666; font-style: italic; margin: 15px 0;">
+                All modifications are clearly displayed before checkout
+            </p>
+
+            <button class="button button-primary" onclick="showScreen(4)">
+                PROCEED TO CHECKOUT →
+            </button>
+
+            <button class="button" onclick="showScreen(1)">
+                ← EDIT ORDER
+            </button>
+        </div>
+
+        <!-- Screen 4: Checkout Summary -->
+        <div id="screen4" class="screen">
+            <div class="header">
+                <h1>Checkout</h1>
+                <p>Final Review</p>
+            </div>
+
+            <div class="label">ORDER SUMMARY</div>
+            <div class="wireframe-box">
+                <strong style="font-size: 14px;">Menu Item Name</strong>
+                <p style="font-size: 11px; color: #666; margin: 5px 0;">From: Restaurant Name</p>
+                
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 2px dashed #999;">
+                    <p style="font-size: 12px; margin-bottom: 8px;"><strong>Base:</strong> $16.95</p>
+                    <p style="font-size: 12px; margin-bottom: 5px;">
+                        <strong>Modifications:</strong>
+                    </p>
+                    <ul style="margin-left: 20px; font-size: 11px; line-height: 1.6;">
+                        <li>Remove ingredient (−$0.00)</li>
+                        <li>Add extra (+$1.50)</li>
+                        <li>Extra sauce (+$1.00)</li>
+                        <li>Special instructions included</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #333; font-size: 16px; font-weight: bold;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>TOTAL:</span>
+                        <span>$19.45</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wireframe-box" style="border-left: 4px solid #333;">
+                <p style="font-size: 11px;">
+                    ℹ️ <strong>Note:</strong> All customizations are shown clearly throughout the ordering process. Restaurant will receive full details of your modifications.
+                </p>
+            </div>
+
+            <button class="button button-primary">
+                PLACE ORDER
+            </button>
+
+            <div class="nav-buttons">
+                <div class="nav-button" onclick="showScreen(1)">← Start Over</div>
+                <div class="nav-button" onclick="showScreen(3)">← Edit Cart</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + num).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
